@@ -1,16 +1,27 @@
-# cabsy_app
+# Cabsy App
 
-Cabsy Taxi App for iOS and Android
+Official mobile application for Cabsy Taxi service (iOS and Android).
+
+## Features
+
+- **Home Screen** - Hero banner with Cabsy branding and quick booking access
+- **Booking** - Easy taxi reservation interface
+- **Profile** - User account management
+- **Multi-language** - Supports French, English, German, and Dutch
+- **Responsive Design** - Optimized for various screen sizes
+
+## Assets
+
+- `assets/images/logo.png` - Official Cabsy logo
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Install Flutter SDK
+2. Run `flutter pub get`
+3. Run `flutter run -d chrome` (web) or connect a device/emulator
 
-A few resources to get you started if this is your first Flutter project:
+## Resources
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Flutter documentation](https://docs.flutter.dev/)
