@@ -68,3 +68,38 @@ flutter build ios
 # Run app
 flutter run
 ```
+
+## ⚠️ MANDATORY: MD Files in Every Commit
+
+**Every `commit` and `push` operation MUST include updates to relevant `.md` files.**
+
+### Required on Every Commit
+
+1. **CHANGELOG.md** (if it exists) — Add entry describing what changed
+2. **Folder README.md** — Update the README.md of any folder whose files were modified
+3. **pubspec.yaml** comments — Update if dependencies changed
+
+### Which Files to Update
+
+| Change Type | MD Files to Update |
+|-------------|-------------------|
+| New screen | `lib/screens/README.md`, `CHANGELOG.md` |
+| New widget | `lib/widgets/README.md`, `CHANGELOG.md` |
+| New locale string | `lib/l10n/README.md`, `CHANGELOG.md` |
+| New asset | `assets/README.md`, `CHANGELOG.md` |
+| New test | `test/README.md`, `CHANGELOG.md` |
+| Bug fix | `CHANGELOG.md` |
+| New dependency | `README.md`, `CHANGELOG.md` |
+
+### Commit Message Format
+
+```
+type: Short description
+
+- Detail of change 1
+- Detail of change 2
+
+MD files updated: CHANGELOG.md, [other files]
+```
+
+**This rule is NON-NEGOTIABLE. No commit should ever be pushed without updating MD files.**
