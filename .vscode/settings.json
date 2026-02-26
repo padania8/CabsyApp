@@ -1,0 +1,16 @@
+{
+  "dart.flutterSdkPath": "/home/fmarcato/snap/flutter/common/flutter",
+  "dart.sdkPath": "/home/fmarcato/snap/flutter/common/flutter/bin/cache/dart-sdk",
+  "dart.checkForSdkUpdates": true,
+  "dart.lineLength": 80,
+  "editor.formatOnSave": true,
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  }
+}

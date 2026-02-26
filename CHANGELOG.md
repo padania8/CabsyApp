@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **VS Code settings** (`.vscode/settings.json`) — Flutter & Dart SDK paths, format-on-save, Dart editor config
+- **Flutter SDK 3.41.2** installed (snap) with Dart 3.11.0
+- **Android SDK 36** configured with build-tools and licenses accepted
+
+### Changed
+
+- **pubspec.lock** — Updated 11 transitive dependencies to latest compatible versions
+
+### Infrastructure
+
+- PATH configured with `/snap/bin` in `~/.bashrc`
+- Android SDK path linked via `flutter config --android-sdk`
+- `flutter pub get` resolved all dependencies
+
+---
+
+## [1.0.1-dev] - 2026-02-16
+
+### Added
+
 - **README.md files** added to all project folders for developer documentation:
   - `lib/README.md` — Source code structure overview
   - `lib/screens/README.md` — Screen widgets guide
