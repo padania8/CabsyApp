@@ -39,7 +39,7 @@ All code MUST:
 - ✅ Be secure (no hardcoded credentials, secure API calls)
 - ✅ Be GDPR compliant (encrypt PII, proper consent flows)
 - ✅ Follow Flutter/Dart best practices
-- ✅ Pass all tests before commit
+- ✅ Pass all tests before commit — **Exception:** tests can be skipped if ONLY `.md` files changed (no code changes)
 
 ## ⚠️ MANDATORY: Server Update on Every Connection
 
