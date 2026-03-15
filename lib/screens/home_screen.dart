@@ -31,48 +31,56 @@ class HomeScreen extends StatelessWidget {
               ),
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Spacer(),
-                      // Logo
+                      // Logo placeholder
                       Row(
                         children: [
-                          Image.asset(
-                            'assets/images/logo.png',
-                            height: 40,
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryYellow,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.local_taxi,
+                              color: AppTheme.primaryBlack,
+                              size: 32,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           const Text(
                             'Cabsy',
                             style: TextStyle(
                               color: AppTheme.primaryYellow,
-                              fontSize: 24,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                       Text(
                         l10n.bannerHeading,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 28,
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       Text(
                         l10n.bannerText,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.8),
-                          fontSize: 14,
+                          fontSize: 16,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
