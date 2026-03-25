@@ -3,7 +3,16 @@ import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 
 class BookingScreen extends StatefulWidget {
-  const BookingScreen({super.key});
+  final bool presetAirport;
+  final bool presetScheduled;
+  final bool presetRecurring;
+
+  const BookingScreen({
+    super.key,
+    this.presetAirport = false,
+    this.presetScheduled = false,
+    this.presetRecurring = false,
+  });
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -13,7 +22,7 @@ class _BookingScreenState extends State<BookingScreen> {
   final _formKey = GlobalKey<FormState>();
   final _pickupController = TextEditingController();
   final _destinationController = TextEditingController();
-  
+
   String _rideType = 'now';
   DateTime? _scheduledDateTime;
   bool _isRecurring = false;
@@ -22,8 +31,16 @@ class _BookingScreenState extends State<BookingScreen> {
   int _petCount = 0;
   bool _isAirportRide = false;
   String _paymentMethod = 'cash';
-  
+
   double? _estimatedFare;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.presetAirport) _isAirportRide = true;
+    if (widget.presetScheduled) _rideType = 'scheduled';
+    if (widget.presetRecurring) _isRecurring = true;
+  }
 
   @override
   void dispose() {
@@ -33,18 +50,46 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   void _calculateFare() {
-    // Simple fare calculation (can be made more sophisticated)
-    double baseFare = 5.0;
-    double perKm = 2.50;
-    double estimatedDistance = 10.0; // placeholder
-    
-    double fare = baseFare + (perKm * estimatedDistance);
-    
-    // Add surcharges
-    fare += _luggageCount * 2.0;
-    fare += _petCount * 3.0;
-    if (_isAirportRide) fare += 10.0;
-    
+    // Belgian taxi pricing matching the website (cabsy.be)
+    const double baseFare = 8.0;
+    const double pricePerKm = 3.0;
+    const double pricePerMin = 1.0;
+    const double minimumFare = 8.0;
+    const double luggageFeePerItem = 2.0;
+    const double petFeeAmount = 5.0;
+    const double airportSurchargeAmount = 10.0;
+
+    double estimatedDistance = 10.0; // placeholder until GPS/maps integrated
+    double estimatedMinutes = 15.0; // placeholder
+
+    double fare =
+        baseFare +
+        (pricePerKm * estimatedDistance) +
+        (pricePerMin * estimatedMinutes);
+
+    // Time surcharges
+    if (_scheduledDateTime != null) {
+      final hour = _scheduledDateTime!.hour;
+      final weekday = _scheduledDateTime!.weekday;
+
+      // Night surcharge (22h-6h): +10%
+      if (hour >= 22 || hour < 6) {
+        fare *= 1.10;
+      }
+      // Sunday surcharge: +15%
+      if (weekday == DateTime.sunday) {
+        fare *= 1.15;
+      }
+    }
+
+    // Extra fees
+    fare += _luggageCount * luggageFeePerItem;
+    fare += _petCount * petFeeAmount;
+    if (_isAirportRide) fare += airportSurchargeAmount;
+
+    // Enforce minimum fare
+    if (fare < minimumFare) fare = minimumFare;
+
     setState(() {
       _estimatedFare = fare;
     });
@@ -57,18 +102,21 @@ class _BookingScreenState extends State<BookingScreen> {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 30)),
     );
-    
+
     if (date != null && mounted) {
       final time = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
       );
-      
+
       if (time != null && mounted) {
         setState(() {
           _scheduledDateTime = DateTime(
-            date.year, date.month, date.day,
-            time.hour, time.minute,
+            date.year,
+            date.month,
+            date.day,
+            time.hour,
+            time.minute,
           );
         });
       }
@@ -92,9 +140,7 @@ class _BookingScreenState extends State<BookingScreen> {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.reservationTitle),
-      ),
+      appBar: AppBar(title: Text(l10n.reservationTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -113,7 +159,10 @@ class _BookingScreenState extends State<BookingScreen> {
                 controller: _pickupController,
                 decoration: InputDecoration(
                   labelText: l10n.pickupLabel,
-                  prefixIcon: const Icon(Icons.trip_origin, color: Colors.green),
+                  prefixIcon: const Icon(
+                    Icons.trip_origin,
+                    color: Colors.green,
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.my_location),
                     onPressed: () {
@@ -160,11 +209,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.map,
-                        size: 48,
-                        color: AppTheme.grayMedium,
-                      ),
+                      Icon(Icons.map, size: 48, color: AppTheme.grayMedium),
                       const SizedBox(height: 8),
                       Text(
                         l10n.selectOnMap,
@@ -179,9 +224,9 @@ class _BookingScreenState extends State<BookingScreen> {
               // Ride Type
               Text(
                 l10n.rideType,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               SegmentedButton<String>(
@@ -234,12 +279,13 @@ class _BookingScreenState extends State<BookingScreen> {
                 if (_isRecurring)
                   DropdownButtonFormField<String>(
                     value: _recurrencePattern,
-                    decoration: const InputDecoration(
-                      labelText: 'Repeat',
-                    ),
+                    decoration: const InputDecoration(labelText: 'Repeat'),
                     items: const [
                       DropdownMenuItem(value: 'daily', child: Text('Daily')),
-                      DropdownMenuItem(value: 'weekdays', child: Text('Weekdays')),
+                      DropdownMenuItem(
+                        value: 'weekdays',
+                        child: Text('Weekdays'),
+                      ),
                       DropdownMenuItem(value: 'weekly', child: Text('Weekly')),
                     ],
                     onChanged: (value) {
@@ -260,9 +306,8 @@ class _BookingScreenState extends State<BookingScreen> {
                     children: [
                       Text(
                         l10n.fareEstimate,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -271,7 +316,8 @@ class _BookingScreenState extends State<BookingScreen> {
                             child: _CounterField(
                               label: l10n.luggageCount,
                               value: _luggageCount,
-                              onChanged: (v) => setState(() => _luggageCount = v),
+                              onChanged:
+                                  (v) => setState(() => _luggageCount = v),
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -336,9 +382,9 @@ class _BookingScreenState extends State<BookingScreen> {
               // Payment Method
               Text(
                 l10n.paymentMethod,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               Wrap(
@@ -357,7 +403,8 @@ class _BookingScreenState extends State<BookingScreen> {
                   ChoiceChip(
                     label: Text(l10n.online),
                     selected: _paymentMethod == 'online',
-                    onSelected: (s) => setState(() => _paymentMethod = 'online'),
+                    onSelected:
+                        (s) => setState(() => _paymentMethod = 'online'),
                   ),
                 ],
               ),
@@ -413,7 +460,10 @@ class _CounterField extends StatelessWidget {
               child: Text(
                 '$value',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             IconButton.outlined(

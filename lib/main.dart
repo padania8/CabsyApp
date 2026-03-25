@@ -13,6 +13,11 @@ class CabsyApp extends StatefulWidget {
 
   @override
   State<CabsyApp> createState() => _CabsyAppState();
+
+  /// Allows descendants to access the app state to change locale/theme.
+  static _CabsyAppState? of(BuildContext context) {
+    return context.findAncestorStateOfType<_CabsyAppState>();
+  }
 }
 
 class _CabsyAppState extends State<CabsyApp> {

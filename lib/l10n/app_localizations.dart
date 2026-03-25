@@ -3,19 +3,22 @@ import 'app_localizations_en.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_nl.dart';
+import 'app_localizations_it.dart';
 
 abstract class AppLocalizations {
   static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   static const List<Locale> supportedLocales = [
     Locale('en'),
     Locale('fr'),
     Locale('de'),
     Locale('nl'),
+    Locale('it'),
   ];
 
   // Navigation
@@ -146,6 +149,41 @@ abstract class AppLocalizations {
   String get aboutTitle;
   String get aboutText;
 
+  // Services
+  String get servicesTitle;
+  String get servicesIntro;
+  String get serviceLocalTitle;
+  String get serviceLocalDesc;
+  String get serviceAirportTitle;
+  String get serviceAirportDesc;
+  String get serviceLongDistanceTitle;
+  String get serviceLongDistanceDesc;
+  String get serviceBusinessTitle;
+  String get serviceBusinessDesc;
+  String get serviceAccessibleTitle;
+  String get serviceAccessibleDesc;
+  String get serviceScheduledTitle;
+  String get serviceScheduledDesc;
+
+  // Tariffs
+  String get tariffsTitle;
+  String get tariffsIntro;
+  String get baseFare;
+  String get perKm;
+  String get perMinute;
+  String get minimumFare;
+  String get nightSurcharge;
+  String get sundaySurcharge;
+  String get holidaySurcharge;
+  String get shortNoticeSurcharge;
+  String get earlyBookingDiscount;
+  String get luggageFee;
+  String get petFee;
+  String get airportFee;
+  String get surcharges;
+  String get extraFees;
+  String get regulationInfo;
+
   // Misc
   String get cancel;
   String get confirm;
@@ -158,14 +196,17 @@ abstract class AppLocalizations {
   String get error;
   String get success;
   String get retry;
+  String get contactFormSent;
+  String get phone;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'fr', 'de', 'nl'].contains(locale.languageCode);
+    return ['en', 'fr', 'de', 'nl', 'it'].contains(locale.languageCode);
   }
 
   @override
@@ -177,6 +218,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
         return AppLocalizationsDe();
       case 'nl':
         return AppLocalizationsNl();
+      case 'it':
+        return AppLocalizationsIt();
       case 'en':
       default:
         return AppLocalizationsEn();

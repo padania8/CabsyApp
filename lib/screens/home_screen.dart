@@ -23,10 +23,7 @@ class HomeScreen extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    AppTheme.primaryBlack,
-                    Color(0xFF2A2A2A),
-                  ],
+                  colors: [AppTheme.primaryBlack, Color(0xFF2A2A2A)],
                 ),
               ),
               child: SafeArea(
@@ -114,8 +111,8 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     'Why Cabsy?',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -162,8 +159,8 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     'Quick Actions',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -172,7 +169,16 @@ class HomeScreen extends StatelessWidget {
                         child: _QuickActionButton(
                           icon: Icons.flight,
                           label: 'Airport',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => const BookingScreen(
+                                      presetAirport: true,
+                                    ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -180,7 +186,16 @@ class HomeScreen extends StatelessWidget {
                         child: _QuickActionButton(
                           icon: Icons.schedule,
                           label: 'Schedule',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => const BookingScreen(
+                                      presetScheduled: true,
+                                    ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -188,7 +203,17 @@ class HomeScreen extends StatelessWidget {
                         child: _QuickActionButton(
                           icon: Icons.repeat,
                           label: 'Recurring',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => const BookingScreen(
+                                      presetScheduled: true,
+                                      presetRecurring: true,
+                                    ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -238,12 +263,7 @@ class _QuickActionButton extends StatelessWidget {
               child: Icon(icon, color: AppTheme.primaryBlack),
             ),
             const SizedBox(height: 8),
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
           ],
         ),
       ),
