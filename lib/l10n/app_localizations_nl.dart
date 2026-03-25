@@ -289,6 +289,8 @@ class AppLocalizationsNl implements AppLocalizations {
   @override
   String get minimumFare => 'Minimumtarief';
   @override
+  String get maximumFare => 'Maximumtarief';
+  @override
   String get nightSurcharge => 'Nachttoeslag (22u-6u)';
   @override
   String get sundaySurcharge => 'Zondagstoeslag';

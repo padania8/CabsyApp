@@ -307,6 +307,7 @@ class MoreScreen extends StatelessWidget {
                           _TariffRow(label: l10n.perKm, value: '€3.00'),
                           _TariffRow(label: l10n.perMinute, value: '€1.00'),
                           _TariffRow(label: l10n.minimumFare, value: '€8.00'),
+                          _TariffRow(label: l10n.maximumFare, value: '€300.00'),
                         ],
                       ),
                     ),
@@ -543,7 +544,7 @@ class MoreScreen extends StatelessWidget {
                   const _FaqItem(
                     question: 'Is there a minimum fare?',
                     answer:
-                        'Yes, the minimum fare is €8.00. This covers short trips within the immediate Malmedy area.',
+                        'Yes, the minimum fare is €8.00. The maximum fare is capped at €300.00 per ride.',
                   ),
                   const _FaqItem(
                     question: 'Do you offer business/corporate services?',

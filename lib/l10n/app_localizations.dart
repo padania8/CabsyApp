@@ -172,6 +172,7 @@ abstract class AppLocalizations {
   String get perKm;
   String get perMinute;
   String get minimumFare;
+  String get maximumFare;
   String get nightSurcharge;
   String get sundaySurcharge;
   String get holidaySurcharge;

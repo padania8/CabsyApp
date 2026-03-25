@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **€300 maximum fare cap** — Added `maximumFare = 300.0` constant in booking screen; fare capped at €300; tariff row and FAQ updated in more screen; `maximumFare` localization key added in all 5 languages
+
 ### Added — Website Feature Sync
 
 - **Italian locale** (`app_localizations_it.dart`) — 5th language matching CabsyWeb (FR, EN, DE, NL, IT)

@@ -55,6 +55,7 @@ class _BookingScreenState extends State<BookingScreen> {
     const double pricePerKm = 3.0;
     const double pricePerMin = 1.0;
     const double minimumFare = 8.0;
+    const double maximumFare = 300.0;
     const double luggageFeePerItem = 2.0;
     const double petFeeAmount = 5.0;
     const double airportSurchargeAmount = 10.0;
@@ -89,6 +90,9 @@ class _BookingScreenState extends State<BookingScreen> {
 
     // Enforce minimum fare
     if (fare < minimumFare) fare = minimumFare;
+
+    // Enforce maximum fare cap
+    if (fare > maximumFare) fare = maximumFare;
 
     setState(() {
       _estimatedFare = fare;

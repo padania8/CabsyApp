@@ -290,6 +290,8 @@ class AppLocalizationsFr implements AppLocalizations {
   @override
   String get minimumFare => 'Course minimum';
   @override
+  String get maximumFare => 'Course maximum';
+  @override
   String get nightSurcharge => 'Supplément nuit (22h-6h)';
   @override
   String get sundaySurcharge => 'Supplément dimanche';

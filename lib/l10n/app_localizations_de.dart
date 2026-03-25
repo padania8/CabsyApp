@@ -288,6 +288,8 @@ class AppLocalizationsDe implements AppLocalizations {
   @override
   String get minimumFare => 'Mindestfahrpreis';
   @override
+  String get maximumFare => 'Höchstfahrpreis';
+  @override
   String get nightSurcharge => 'Nachtzuschlag (22-6 Uhr)';
   @override
   String get sundaySurcharge => 'Sonntagszuschlag';
