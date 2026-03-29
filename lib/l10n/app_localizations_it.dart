@@ -215,6 +215,12 @@ class AppLocalizationsIt implements AppLocalizations {
   String get online => 'Online';
   @override
   String get savedMethod => 'Metodo salvato';
+  @override
+  String get payWithMollie => 'Paga con Mollie';
+  @override
+  String get paymentError => 'Il pagamento non è stato avviato. Riprova.';
+  @override
+  String get mollieSecureNote => 'Verrai reindirizzato a Mollie per un pagamento sicuro.';
 
   // FAQ
   @override

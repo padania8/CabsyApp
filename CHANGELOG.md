@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Mollie online payment** — Added `PaymentService` and `ApiConfig` in `lib/services/`; booking screen routes "online" payment method to Mollie checkout via CabsyWeb API; opens Mollie payment page in external browser via `url_launcher`; loading spinner during payment creation; error handling with user-friendly messages; `payWithMollie`, `paymentError`, `mollieSecureNote` localization keys in all 5 languages
+- **HTTP networking** — Added `http: ^1.4.0` and `url_launcher: ^6.3.1` dependencies
 - **€300 maximum fare cap** — Added `maximumFare = 300.0` constant in booking screen; fare capped at €300; tariff row and FAQ updated in more screen; `maximumFare` localization key added in all 5 languages
 
 ### Added — Website Feature Sync

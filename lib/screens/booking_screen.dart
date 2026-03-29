@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
+import '../services/payment_service.dart';
 
 class BookingScreen extends StatefulWidget {
   final bool presetAirport;
@@ -33,6 +35,8 @@ class _BookingScreenState extends State<BookingScreen> {
   String _paymentMethod = 'cash';
 
   double? _estimatedFare;
+  bool _isSubmitting = false;
+  final PaymentService _paymentService = PaymentService();
 
   @override
   void initState() {
@@ -46,6 +50,7 @@ class _BookingScreenState extends State<BookingScreen> {
   void dispose() {
     _pickupController.dispose();
     _destinationController.dispose();
+    _paymentService.dispose();
     super.dispose();
   }
 
@@ -129,14 +134,56 @@ class _BookingScreenState extends State<BookingScreen> {
 
   void _submitBooking() {
     if (_formKey.currentState!.validate()) {
-      // TODO: Submit booking to backend
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context).success),
-          backgroundColor: AppTheme.successText,
-        ),
-      );
+      if (_paymentMethod == 'online') {
+        _startMolliePayment();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context).success),
+            backgroundColor: AppTheme.successText,
+          ),
+        );
+      }
     }
+  }
+
+  Future<void> _startMolliePayment() async {
+    if (_isSubmitting) return;
+    setState(() => _isSubmitting = true);
+
+    final l10n = AppLocalizations.of(context);
+
+    try {
+      // TODO: Replace with real booking reference and quote token
+      // once the full booking API is integrated
+      final result = await _paymentService.createPayment(
+        bookingReference: 'CB-${DateTime.now().millisecondsSinceEpoch}',
+        quoteToken: 'demo',
+      );
+
+      if (!mounted) return;
+
+      if (result.success && result.checkoutUrl != null) {
+        final url = Uri.parse(result.checkoutUrl!);
+        if (await canLaunchUrl(url)) {
+          await launchUrl(url, mode: LaunchMode.externalApplication);
+        } else {
+          _showPaymentError(l10n.paymentError);
+        }
+      } else {
+        _showPaymentError(result.error ?? l10n.paymentError);
+      }
+    } catch (_) {
+      if (mounted) _showPaymentError(l10n.paymentError);
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
+  }
+
+  void _showPaymentError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
   }
 
   @override
@@ -412,6 +459,21 @@ class _BookingScreenState extends State<BookingScreen> {
                   ),
                 ],
               ),
+              if (_paymentMethod == 'online') ...[
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.lock, size: 16, color: Colors.green),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        l10n.mollieSecureNote,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 32),
 
               // Submit Button
@@ -419,11 +481,22 @@ class _BookingScreenState extends State<BookingScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: _submitBooking,
-                  child: Text(
-                    l10n.submitBooking,
-                    style: const TextStyle(fontSize: 18),
-                  ),
+                  onPressed: _isSubmitting ? null : _submitBooking,
+                  child: _isSubmitting
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          _paymentMethod == 'online'
+                              ? l10n.payWithMollie
+                              : l10n.submitBooking,
+                          style: const TextStyle(fontSize: 18),
+                        ),
                 ),
               ),
               const SizedBox(height: 32),

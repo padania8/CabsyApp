@@ -214,6 +214,12 @@ class AppLocalizationsNl implements AppLocalizations {
   String get online => 'Online';
   @override
   String get savedMethod => 'Opgeslagen methode';
+  @override
+  String get payWithMollie => 'Betalen met Mollie';
+  @override
+  String get paymentError => 'Betaling kon niet worden gestart. Probeer het opnieuw.';
+  @override
+  String get mollieSecureNote => 'U wordt doorgestuurd naar Mollie voor een veilige betaling.';
 
   // FAQ
   @override

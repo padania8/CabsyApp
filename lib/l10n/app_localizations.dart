@@ -135,6 +135,9 @@ abstract class AppLocalizations {
   String get card;
   String get online;
   String get savedMethod;
+  String get payWithMollie;
+  String get paymentError;
+  String get mollieSecureNote;
 
   // FAQ
   String get faqTitle;
