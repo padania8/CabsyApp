@@ -219,7 +219,8 @@ class AppLocalizationsEn implements AppLocalizations {
   @override
   String get paymentError => 'Payment could not be started. Please try again.';
   @override
-  String get mollieSecureNote => 'You will be redirected to Mollie for secure payment.';
+  String get mollieSecureNote =>
+      'You will be redirected to Mollie for secure payment.';
 
   // FAQ
   @override

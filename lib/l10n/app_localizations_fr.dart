@@ -214,12 +214,15 @@ class AppLocalizationsFr implements AppLocalizations {
   @override
   String get online => 'En ligne';
   @override
-  String get savedMethod => 'Méthode enregistrée';  @override
+  String get savedMethod => 'Méthode enregistrée';
+  @override
   String get payWithMollie => 'Payer avec Mollie';
   @override
-  String get paymentError => 'Le paiement n\'a pas pu être lancé. Veuillez réessayer.';
+  String get paymentError =>
+      'Le paiement n\'a pas pu être lancé. Veuillez réessayer.';
   @override
-  String get mollieSecureNote => 'Vous serez redirigé vers Mollie pour un paiement sécurisé.';
+  String get mollieSecureNote =>
+      'Vous serez redirigé vers Mollie pour un paiement sécurisé.';
   // FAQ
   @override
   String get faqTitle => 'Questions fréquentes';

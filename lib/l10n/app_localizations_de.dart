@@ -216,9 +216,11 @@ class AppLocalizationsDe implements AppLocalizations {
   @override
   String get payWithMollie => 'Mit Mollie bezahlen';
   @override
-  String get paymentError => 'Zahlung konnte nicht gestartet werden. Bitte versuchen Sie es erneut.';
+  String get paymentError =>
+      'Zahlung konnte nicht gestartet werden. Bitte versuchen Sie es erneut.';
   @override
-  String get mollieSecureNote => 'Sie werden für eine sichere Zahlung zu Mollie weitergeleitet.';
+  String get mollieSecureNote =>
+      'Sie werden für eine sichere Zahlung zu Mollie weitergeleitet.';
 
   // FAQ
   @override

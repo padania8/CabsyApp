@@ -482,21 +482,22 @@ class _BookingScreenState extends State<BookingScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: _isSubmitting ? null : _submitBooking,
-                  child: _isSubmitting
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
+                  child:
+                      _isSubmitting
+                          ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                          : Text(
+                            _paymentMethod == 'online'
+                                ? l10n.payWithMollie
+                                : l10n.submitBooking,
+                            style: const TextStyle(fontSize: 18),
                           ),
-                        )
-                      : Text(
-                          _paymentMethod == 'online'
-                              ? l10n.payWithMollie
-                              : l10n.submitBooking,
-                          style: const TextStyle(fontSize: 18),
-                        ),
                 ),
               ),
               const SizedBox(height: 32),

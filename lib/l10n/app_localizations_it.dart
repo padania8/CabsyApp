@@ -220,7 +220,8 @@ class AppLocalizationsIt implements AppLocalizations {
   @override
   String get paymentError => 'Il pagamento non è stato avviato. Riprova.';
   @override
-  String get mollieSecureNote => 'Verrai reindirizzato a Mollie per un pagamento sicuro.';
+  String get mollieSecureNote =>
+      'Verrai reindirizzato a Mollie per un pagamento sicuro.';
 
   // FAQ
   @override
